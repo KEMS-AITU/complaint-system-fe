@@ -1,4 +1,11 @@
-export type ComplaintStatus = 'NEW' | 'IN_PROGRESS' | 'RESOLVED' | 'CLOSED';
+export type ComplaintStatus =
+  | 'NEW'
+  | 'IN_PROGRESS'
+  | 'RESOLVED'
+  | 'CLOSED'
+  | 'SUBMITTED'
+  | 'IN_REVIEW'
+  | 'REJECTED';
 
 export type Complaint = {
   id: number;
@@ -7,6 +14,7 @@ export type Complaint = {
   user: number;
   category: number | null;
   created_at: string;
+  updated_at?: string;
 };
 
 export type Feedback = {

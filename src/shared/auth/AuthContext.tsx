@@ -5,7 +5,9 @@ import { useLocalStorage } from '../hooks/useLocalStorage';
 type AuthContextValue = {
   token: string;
   isAdmin: boolean;
+  userIdentifier: string;
   setToken: (token: string) => void;
+  setUserIdentifier: (value: string) => void;
   clearToken: () => void;
 };
 
@@ -14,12 +16,18 @@ const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [token, setTokenValue] = useLocalStorage('complaint_token', '');
   const [isAdminValue, setIsAdminValue] = useLocalStorage('complaint_is_admin', 'false');
+  const [userIdentifier, setUserIdentifierValue] = useLocalStorage(
+    'complaint_user_identifier',
+    ''
+  );
   const isAdmin = isAdminValue === 'true';
 
   const setToken = (value: string) => setTokenValue(value);
+  const setUserIdentifier = (value: string) => setUserIdentifierValue(value);
   const clearToken = () => {
     setTokenValue('');
     setIsAdminValue('false');
+    setUserIdentifierValue('');
   };
 
   useEffect(() => {
@@ -43,7 +51,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, [token, setIsAdminValue]);
 
   return (
-    <AuthContext.Provider value={{ token, isAdmin, setToken, clearToken }}>
+    <AuthContext.Provider value={{ token, isAdmin, userIdentifier, setToken, setUserIdentifier, clearToken }}>
       {children}
     </AuthContext.Provider>
   );

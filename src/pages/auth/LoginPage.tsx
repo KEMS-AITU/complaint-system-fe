@@ -19,7 +19,7 @@ const validatePassword = (value: string) => {
 };
 
 export const LoginPage = () => {
-  const { token, setToken } = useAuth();
+  const { token, setToken, setUserIdentifier } = useAuth();
   const location = useLocation();
   const from = (location.state as { from?: { pathname: string } })?.from?.pathname ?? '/';
 
@@ -54,6 +54,7 @@ export const LoginPage = () => {
 
     if (result.ok && result.data?.token) {
       setToken(result.data.token);
+      setUserIdentifier(identifier.trim());
       return;
     }
 
