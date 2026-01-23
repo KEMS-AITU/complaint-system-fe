@@ -14,8 +14,8 @@ export const AppLayout = () => {
               { to: '/feedback', label: 'Feedback' },
             ]
           : []),
-      ]
-    : [{ to: '/auth', label: 'Sign in' }];
+    ]
+    : [{ to: '/login', label: 'Sign in' }];
 
   return (
     <div className="app">

@@ -11,7 +11,7 @@ export const RequireAuth = ({ children }: RequireAuthProps) => {
   const location = useLocation();
 
   if (!token) {
-    return <Navigate to="/auth" replace state={{ from: location }} />;
+    return <Navigate to="/login" replace state={{ from: location }} />;
   }
 
   return <>{children}</>;
