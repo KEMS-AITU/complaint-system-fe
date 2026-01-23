@@ -1,23 +1,21 @@
 import { NavLink, Outlet } from 'react-router-dom';
 import { useAuth } from '../../shared/auth/AuthContext';
 import { Button } from '../../shared/ui/Button';
-import { TopBar } from '../../shared/layout/TopBar';
 
 export const AppLayout = () => {
   const { token, isAdmin, clearToken } = useAuth();
+
   const navItems = token
     ? [
-        { to: '/', label: 'Home' },
+        // Home видна только обычным пользователям
+        ...(!isAdmin ? [{ to: '/', label: 'Home' }] : []),
         { to: '/create', label: 'New complaint' },
-        { to: '/complaints', label: 'My complaints' },
+        // Track и Feedback только для админов, Feedback скрыт
         ...(isAdmin
-          ? [
-              { to: '/track', label: 'Track complaint' },
-              { to: '/feedback', label: 'Feedback' },
-            ]
+          ? [{ to: '/track', label: 'Track complaint' }]
           : []),
-    ]
-    : [{ to: '/login', label: 'Sign in' }];
+      ]
+    : [{ to: '/auth', label: 'Sign in' }];
 
   return (
     <div className="app">
@@ -61,7 +59,13 @@ export const AppLayout = () => {
           </div>
         </aside>
         <main className="content">
-          <TopBar />
+          <header className="topbar">
+            <div>
+              <p className="eyebrow">Complaint Hub</p>
+              <h1>Tell us what happened</h1>
+            </div>
+            <div className="topbar-chip">Customer care</div>
+          </header>
           <div className="page">
             <Outlet />
           </div>
